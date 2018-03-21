@@ -70,6 +70,17 @@ class RequestHandler implements RequestHandlerInterface{
     }
 
     /**
+     * レスポンスファクトリを変更する
+     *
+     * @param   ResponseFactoryInterface    $factory
+     *
+     * @return  void
+     */
+    public function setResopnseFactory(ResponseFactoryInterface $factory){
+        $this->factory  = $factory;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @param   ServerRequestInterface  $request
