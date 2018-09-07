@@ -13,11 +13,9 @@
  */
 namespace Fratily\Http\Server\Middleware;
 
-use Psr\Http\{
-    Message\ResponseInterface,
-    Message\ServerRequestInterface,
-    Server\MiddlewareInterface
-};
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  *

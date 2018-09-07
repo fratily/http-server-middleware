@@ -13,13 +13,11 @@
  */
 namespace Fratily\Http\Server;
 
-use Psr\Http\{
-    Message\ServerRequestInterface,
-    Message\ResponseInterface,
-    Server\RequestHandlerInterface,
-    Server\MiddlewareInterface
-};
-use Interop\Http\Factory\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  *
