@@ -56,7 +56,7 @@ class RequestHandler implements RequestHandlerInterface{
         foreach($queue as $middleware){
             if(!$middleware instanceof MiddlewareInterface){
                 throw new \InvalidArgumentException(
-                    ""
+                    "The queue contains values other than middleware."
                 );
             }
         }
