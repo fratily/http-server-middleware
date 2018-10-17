@@ -36,6 +36,50 @@ class RequestHandlerBuilder{
     private $registerd;
 
     /**
+     * ミドルウェアが既に登録されていた場合の例外メッセージを生成する
+     *
+     * @param   MiddlewareInterface $middleware
+     *  対象ミドルウェアインスタンス
+     *
+     * @return  string
+     */
+    protected static function createMsgAlreadyRegisterd(
+        MiddlewareInterface $middleware
+    ){
+        $class  = get_class($middleware);
+        $id     = spl_object_id($middleware);
+        return "Middleware object {$class}#{$id} has already been registered.";
+    }
+
+    /**
+     * クラスが存在しない場合の例外メッセージを生成する
+     *
+     * @param   string  $class
+     *  対象クラス
+     *
+     * @return  string
+     */
+    protected static function createMsgClassNotFound(string $class){
+        return "Class {$class} does not exist in the middleware queue.";
+    }
+
+    /**
+     * オブジェクトが存在しない場合の例外メッセージを生成する
+     *
+     * @param   MiddlewareInterface $middleware
+     *  対象ミドルウェアインスタンス
+     *
+     * @return  string
+     */
+    protected static function createMsgObjectNotFound(
+        MiddlewareInterface $middleware
+    ){
+        $class  = get_class($middleware);
+        $id     = spl_object_id($middleware);
+        return "Object {$class}#{$id} does not exist in the middleware queue.";
+    }
+
+    /**
      * Constructor
      *
      * @param   ResponseFactoryInterface
@@ -82,7 +126,7 @@ class RequestHandlerBuilder{
     public function append(MiddlewareInterface $middleware){
         if($this->isAlreadyRegistered($middleware)){
             throw new Exception\MiddlewareAlreadyRegisteredException(
-                ""
+                static::createMsgAlreadyRegisterd($middleware)
             );
         }
 
@@ -106,7 +150,7 @@ class RequestHandlerBuilder{
     public function prepend(MiddlewareInterface $middleware){
         if($this->isAlreadyRegistered($middleware)){
             throw new Exception\MiddlewareAlreadyRegisteredException(
-                ""
+                static::createMsgAlreadyRegisterd($middleware)
             );
         }
 
@@ -136,7 +180,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getClassIndexes($target))){
             throw new Exception\ClassNotFoundInQueueException(
-                ""
+                static::createMsgClassNotFound($target)
             );
         }
 
@@ -164,7 +208,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getClassIndexes($target))){
             throw new Exception\ClassNotFoundInQueueException(
-                ""
+                static::createMsgClassNotFound($target)
             );
         }
 
@@ -191,7 +235,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getObjectIndexes($target))){
             throw new Exception\ObjectNotFoundInQueueException(
-                ""
+                static::createMsgObjectNotFound($target)
             );
         }
         $this->insert($index, $middleware, self::INSERT_BEFORE);
@@ -218,7 +262,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getObjectIndexes($target))){
             throw new Exception\ObjectNotFoundInQueueException(
-                ""
+                static::createMsgObjectNotFound($target)
             );
         }
 
@@ -246,7 +290,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getIndex($target))){
             throw new Exception\ClassNotFoundInQueueException(
-                ""
+                static::createMsgClassNotFound($target)
             );
         }
 
@@ -274,7 +318,7 @@ class RequestHandlerBuilder{
     ){
         if(null === ($index = $this->getIndex($target))){
             throw new Exception\ObjectNotFoundInQueueException(
-                ""
+                static::createMsgObjectNotFound($target)
             );
         }
 
@@ -304,7 +348,7 @@ class RequestHandlerBuilder{
 
         if($this->isAlreadyRegistered($middleware)){
             throw new Exception\MiddlewareAlreadyRegisteredException(
-                ""
+                static::createMsgAlreadyRegisterd($middleware)
             );
         }
 
@@ -341,7 +385,7 @@ class RequestHandlerBuilder{
 
         if($this->isAlreadyRegistered($middleware)){
             throw new Exception\MiddlewareAlreadyRegisteredException(
-                ""
+                static::createMsgAlreadyRegisterd($middleware)
             );
         }
 
