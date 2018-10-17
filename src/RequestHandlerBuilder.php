@@ -13,14 +13,12 @@
  */
 namespace Fratily\Http\Server;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- *
+ * @todo    ミドルウェアの有効化無効化等の操作を入れる必要があるか考える
  */
 class RequestHandlerBuilder{
 
@@ -47,6 +45,14 @@ class RequestHandlerBuilder{
         $this->registerd    = new \SplObjectStorage();
     }
 
+    /**
+     * リクエストハンドラを作成する
+     *
+     * @param   ResponseFactoryInterface    $factory
+     *  レスポンスファクトリーインスタンス
+     *
+     * @return  RequestHandlerInterface
+     */
     public function create(ResponseFactoryInterface $factory){
         return new RequestHandler(clone $this->queue, $factory);
     }
