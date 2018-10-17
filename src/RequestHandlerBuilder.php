@@ -342,7 +342,7 @@ class RequestHandlerBuilder{
     protected function replace(int $index, MiddlewareInterface $middleware){
         if(!isset($this->queue[$index])){
             throw new \InvalidArgumentException(
-                ""
+                "Queue does not have index {$index}."
             );
         }
 
@@ -379,7 +379,7 @@ class RequestHandlerBuilder{
     ){
         if(!isset($this->queue[$index])){
             throw new \InvalidArgumentException(
-                ""
+                "Queue does not have index {$index}."
             );
         }
 
@@ -390,8 +390,12 @@ class RequestHandlerBuilder{
         }
 
         if(self::INSERT_BEFORE !== $i && self::INSERT_AFTER !== $i){
+            $class  = self::class;
+            $constB = self::INSERT_BEFORE;
+            $constA = self::INSERT_AFTER;
             throw new \InvalidArgumentException(
-                ""
+                "The specification of whether to insert before or after must be"
+                . " {$class}:{$constB} or {$class}:{$constA}."
             );
         }
 
@@ -413,16 +417,11 @@ class RequestHandlerBuilder{
      * @return  int|null
      */
     protected function getIndex($target){
-        if(!is_string($target) && !is_object($target)){
-            throw new \InvalidArgumentException(
-                ""
-            );
-        }
-
         if(is_string($target)){
             if(!class_exists($target) && !interface_exists($target)){
                 throw new \InvalidArgumentException(
-                    ""
+                    "Searche target must be specified by class name or"
+                    . " interface name."
                 );
             }
 
@@ -436,8 +435,10 @@ class RequestHandlerBuilder{
             }
         }elseif(is_object($target)){
             if(!$target instanceof MiddlewareInterface){
+                $class  = MiddlewareInterface::class;
                 throw new \InvalidArgumentException(
-                    ""
+                    "Searche target must be an instance of a class that"
+                    . " implements {$class}."
                 );
             }
 
@@ -446,6 +447,10 @@ class RequestHandlerBuilder{
                     return $index;
                 }
             }
+        }else{
+            throw new \InvalidArgumentException(
+                "The searche target must be specified by object or string."
+            );
         }
 
         return null;
