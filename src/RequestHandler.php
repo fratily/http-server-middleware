@@ -47,7 +47,10 @@ class RequestHandler implements RequestHandlerInterface{
     /**
      * Constructor
      *
-     * @param   ResponseFactoryInterface
+     * @param   \SplQueue   $queue
+     *  ミドルウェア実行キュー
+     * @param   ResponseFactoryInterface    $factory
+     *  レスポンスファクトリーインスタンス
      */
     public function __construct(
         \SplQueue $queue,
